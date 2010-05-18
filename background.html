@@ -1,0 +1,59 @@
+<html>
+<script type="text/javascript" src="library.js"></script>
+<script>
+var maxNumberOfAccounts = 5;
+chrome.extension.onRequest.addListener(
+   function(request, sender, sendResponse) {
+      switch(request.action) {
+         case 'getAccounts':
+            sendResponse(getAccountsFromStorage());
+            break;
+         case 'getPasswordByUser':
+            sendResponse(getPasswordByUser(request.account));
+            break;
+         case 'storeSwitchSession':
+            sendResponse(storeSwitchSession(request.account));
+            break;
+         case 'getSwitchSession':
+            sendResponse(getSwitchSession());
+            break;
+         case 'removeSwitchSession':
+            sendResponse(removeSwitchSession());
+            break;
+      }
+   }
+);
+
+function getAccountsFromStorage() {
+   var accounts = new Array();
+   for (var i = 0; i < maxNumberOfAccounts; i++) {
+      var account = getItem("account" + i);
+      if (account != null) {
+         accounts.push(account);
+      }
+   }
+   return accounts;
+}
+
+function getPasswordByUser(user) {
+   return AesCtr.decrypt(getItem(user), user, 256);
+}
+
+function storeSwitchSession(user) {
+   return setItem('login_session', user);
+}
+
+function getSwitchSession() {
+   return getItem('login_session');
+}
+
+function removeSwitchSession() {
+   removeItem('login_session');
+}
+
+function getItem(key) { return getStorage().getItem(key); }
+function setItem(key, map) { return getStorage().setItem(key, map); }
+function removeItem(key) { return getStorage().removeItem(key); }
+function getStorage() { return window.localStorage; }
+</script>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<style>
+  h1 { font-size:x-large; color:#C60; }
+  h2 { font-size:large;   color:#C60; }
+  .body { width:100%; }
+  .content { width:100%; }
+  .option { width:100%; }
+  .account { background-color:#ededed; border:#ccc solid 1px; }
+  .username { float:left; }
+  .password { float:left; }
+  .submit { float:left; }
+  .cancel { float:left; }
+</style>
+<script type="text/javascript" src="library.js"></script>
+<script type="text/javascript">
+  function getItem(key) { return getStorage().getItem(key); }
+  function setItem(key, value) { return getStorage().setItem(key, value); }
+  function removeItem(key) { return getStorage().removeItem(key); }
+  function getStorage() { return window.localStorage; }
+
+  function setAccount(i) {
+     var account = document.getElementById("account" + i).value;
+     var password = document.getElementById("password" + i).value;
+     setItem("account" + (i-1), account);
+
+     document.getElementById("submit" + i).disabled = true;
+     document.getElementById("clear" + i).disabled = false;
+
+     if (password == null || password == "") {
+         return;
+     }
+     
+     setItem(account, AesCtr.encrypt(password, account, 256));
+  }
+
+  function loadAllSettings() {
+     loadAccount(1);
+     loadAccount(2);
+     loadAccount(3);
+     loadAccount(4);
+     loadAccount(5);
+  }
+
+  function loadAccount(i) {
+     var account = getItem("account" + (i-1));
+     if (account == null) {
+        return;
+     }
+     document.getElementById("clear" + i).disabled = false;
+     document.getElementById("account" + i).value = account;
+     var password = getItem(account);
+     if (password == null) {
+        return;
+     }
+     document.getElementById("password" + i).value = AesCtr.decrypt(password, account, 256);
+  }
+
+  function onChange(i) {
+     var account = document.getElementById("account" + i).value;
+     if (account == null || account == "" || account == "undefined") {
+        document.getElementById("submit" + i).disabled = true;
+        document.getElementById("clear" + i).disabled = true;
+        return;
+     }
+     document.getElementById("submit" + i).disabled = false;
+  }
+
+  function clearAccount(i) {
+     var account = getItem("account" + (i-1));
+     removeItem(account);
+     removeItem("account" + (i-1));
+     document.getElementById("account" + i).value = null;
+     document.getElementById("password" + i).value = null;
+     onChange(i);
+  }
+</script>
+<title class="MSG_option_title">Hatena Switcher Option Page</title>
+<link href="option_page.css" rel="stylesheet" type="text/css">
+<body onload="loadAllSettings();">
+  <center>
+    <div class="header"></div>
+    <center>
+      <div class="body">
+	<div class="content">
+	  <div class="title"><h1 class="MSG_option_title">Hatena Switcher</h1></div>
+	  <div class="option">
+	    <table class="account">
+	      <tr>
+		<td class="username">
+		  Username: <input id="account1" type="text" name="account1" onkeypress="onChange(1);"/>
+		</td>
+		<td class="password">
+		  Password: <input id="password1" type="password" name="password1" value="" onkeypress="onChange(1);"/>
+		</td>
+		<td class="submit">
+		  <input id="submit1" type="submit" name="" value="save" disabled onclick="setAccount(1);"/>
+		</td>
+		<td class="cancel">
+		  <input id="clear1" type="submit" name="" value="clear" disabled onclick="clearAccount(1);"/>
+		</td>
+	      </tr>
+	    </table>
+
+	    <table class="account">
+	      <tr>
+		<td class="username">
+		  Username: <input id="account2" type="text" name="account2" onkeypress="onChange(2);"/>
+		</td>
+		<td class="password">
+		  Password: <input id="password2" type="password" name="password2" value="" onkeypress="onChange(2);"/>
+		</td>
+		<td class="submit">
+		  <input id="submit2" type="submit" name="" value="save" disabled onclick="setAccount(2);"/>
+		</td>
+		<td class="cancel">
+		  <input id="clear2" type="submit" name="" value="clear" disabled onclick="clearAccount(2);"/>
+		</td>
+	      </tr>
+	    </table>
+
+
+	    <table class="account">
+	      <tr>
+		<td class="username">
+		  Username: <input id="account3" type="text" name="account3" onkeypress="onChange(3);"/>
+		</td>
+		<td class="password">
+		  Password: <input id="password3" type="password" name="password3" value="" onkeypress="onChange(3);"/>
+		</td>
+		<td class="submit">
+		  <input id="submit3" type="submit" name="" value="save" disabled onclick="setAccount(3);"/>
+		</td>
+		<td class="cancel">
+		  <input id="clear3" type="submit" name="" value="clear" disabled onclick="clearAccount(3);"/>
+		</td>
+	      </tr>
+	    </table>
+
+
+
+	    <table class="account">
+	      <tr>
+		<td class="username">
+		  Username: <input id="account4" type="text" name="account4" onkeypress="onChange(4);"/>
+		</td>
+		<td class="password">
+		  Password: <input id="password4" type="password" name="password4" value="" onkeypress="onChange(4);"/>
+		</td>
+		<td class="submit">
+		  <input id="submit4" type="submit" name="" value="save" disabled onclick="setAccount(4);"/>
+		</td>
+		<td class="cancel">
+		  <input id="clear4" type="submit" name="" value="clear" disabled onclick="clearAccount(4);"/>
+		</td>
+	      </tr>
+	    </table>
+
+
+
+	    <table class="account">
+	      <tr>
+		<td class="username">
+		  Username: <input id="account5" type="text" name="account5" onkeypress="onChange(5);"/>
+		</td>
+		<td class="password">
+		  Password: <input id="password5" type="password" name="password5" value="" onkeypress="onChange(5);"/>
+		</td>
+		<td class="submit">
+		  <input id="submit5" type="submit" name="" value="save" disabled onclick="setAccount(5);"/>
+		</td>
+		<td class="cancel">
+		  <input id="clear5" type="submit" name="" value="clear" disabled onclick="clearAccount(5);"/>
+		</td>
+	      </tr>
+	    </table>
+
+
+
+	  </div>
+	</div>
+      </div>
+    </center>
+</body>
+</html>
+      

@@ -1,0 +1,27 @@
+{
+    "name": "Hatena Switcher",
+    "version": "1.0",
+    "description": "Switch Hatena account",
+    "options_page": "options_page.html",
+    "background_page": "background.html",
+    "content_scripts": [
+      {
+	  "js" :[
+             "switch.js"
+	  ],
+	  "matches": [
+             "http://*/*",
+	     "https://*/*"
+	  ],
+	  "run_at": "document_end"
+      }
+    ],
+    "browser_action":{
+	"default_icon": "icon.png"
+    },
+    "permissions": [
+	"http://api.flickr.com/"
+    ]
+}
+
+

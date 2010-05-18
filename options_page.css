@@ -1,0 +1,68 @@
+body{
+color:#222222;
+font-family: Arial, Helveting, sans-serif;
+}
+body, ol, ul, li, section, div, button, dt, dd{
+margin:0;
+padding:0;
+}
+ul{
+list-style-type:none;
+}
+p{
+line-height:1.5;
+margin:0.5em 0;
+}
+
+#menu_tabs{
+display:block;
+z-index:100;
+padding:0 0 0 1px;
+}
+#menu_tabs li{
+display:inline-block;
+}
+#menu_tabs li a{
+color:black;
+text-decoration:none;
+display: inline-block;
+background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc), color-stop(0.5, #eee), color-stop(0.5, #ddd));
+padding: 6px 12px;
+border:1px solid #898c95;
+font-size:13px;
+position:relative;
+margin:0 0 1px -1px;
+}
+#menu_tabs li a.active{
+background:white;
+border-bottom:1px solid white;
+z-index:100;
+}
+
+h1{
+background: -webkit-gradient(linear, left top, left bottom, from(#333), to(#999));
+font-size:small;
+border-top-left-radius:4px;
+border-top-right-radius:4px;
+margin:0px;
+padding:3px 8px;
+color:white;
+text-shadow: 3px 3px 3px black;
+line-height:1.4;
+}
+
+#container{
+z-index:10;
+border-top:1px solid #999;
+padding:10px;
+margin-top:-2px;
+}
+#container > section{
+display:none;
+}
+#about dl{
+margin:20px;
+}
+#about dl dd{
+margin:10px 0 20px 50px;
+}
